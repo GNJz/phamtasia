@@ -55,7 +55,6 @@ body {
   white-space: nowrap;         /* 항목 줄바꿈 방지 */
 }
 .menu-content .submenu.has-gap { margin-bottom: 16px; }
-/* KAO 블록 뒤 여백 */
 .menu-content a.spacer-top { margin-top: 16px; }
 .menu-content a:hover{ background: #f7f7f7; }
 
@@ -72,9 +71,9 @@ body {
   font-weight: 500;   /* 기본을 조금 굵게 */
   cursor: pointer;
   color: #222;
-  white-space: nowrap;          /* 텍스트 줄 바꿈 방지 */
+  white-space: nowrap;
 }
-/* 펼쳐진 대메뉴 버튼 글씨 두껍게 (우선순위 확보) */
+/* 펼쳐진 대메뉴 버튼 글씨 두껍게 */
 button.submenu-toggle[aria-expanded="true"]{
   font-weight: 600 !important;
 }
@@ -114,7 +113,7 @@ button.submenu-toggle[aria-expanded="true"]{
 }
 
 /* ===== 대문 로고(화면 중앙 고정) ===== */
-:root{ --menu-width: 300px; }  /* 메뉴 열릴 때 로고 이동 거리(폭과 맞추기) */
+:root{ --menu-width: 300px; }  /* 메뉴 폭 변수 */
 .logo-center{
   position: fixed;
   top: 50%;
@@ -128,23 +127,23 @@ button.submenu-toggle[aria-expanded="true"]{
 
 /* 로고 크기(데스크톱 기본) */
 .logo-center img{
-  width: 7000px !important;
+  width: 600px !important;
   max-width: none !important;
   height: auto !important;
   transition: transform .35s ease;      /* 축소 애니메이션 */
 }
 
-/* ===== 반응형(모바일 전용 변경만 적용) ===== */
-@media (max-width: 7000px){
+/* ===== 모바일 전용 변경만 적용 ===== */
+@media (max-width: 640px){
 
   /* 모바일 기본 로고 크기(항상 더 작게) */
   .logo-center img{
-    width: 70vw !important;           /* 필요 시 60~75vw로 조절 */
+    width: 70vw !important;           /* 60~75vw로 조절 가능 */
     max-width: none !important;
     height: auto !important;
   }
 
-  /* 메뉴 열리면: 로고를 남은 콘텐츠 영역의 중앙으로 이동 + 살짝 축소 */
+  /* 메뉴 열리면: 남은 콘텐츠 영역의 중앙으로 이동 + 살짝 축소 */
   body.menu-open .logo-center{
     transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
   }
