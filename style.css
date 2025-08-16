@@ -141,7 +141,7 @@ body.menu-open .logo-center{
 /* ===== 반응형 ===== */
 @media (max-width: 640px){
   body.menu-open .logo-center{
-    transform: translate(-50%, -50%);
+    transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
   }
   .logo-center img{
     width: 88vw;   /* 모바일은 화면비로 유연하게 */
