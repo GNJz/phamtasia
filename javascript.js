@@ -1,54 +1,58 @@
-// 메뉴/서브메뉴 토글 + 로고 위치 제어
 document.addEventListener('DOMContentLoaded', () => {
   const body        = document.body;
   const sideMenu    = document.getElementById('sideMenu');
   const menuBtn     = document.getElementById('menuBtn');
   const menuContent = document.getElementById('menuContent');
 
-  // 메뉴 폭을 CSS 변수에 반영
-  const setMenuWidthVar = () => {
-    // 열린 상태면 offsetWidth, 아니면 계산된 width 사용
-    const opened = sideMenu.classList.contains('active');
-    const w = opened
-      ? sideMenu.offsetWidth
-      : parseInt(getComputedStyle(sideMenu).width, 10) || 300;
+  // 메뉴 폭을 CSS 변수로 반영(모바일 로고 이동에 사용 가능)
+  function setMenuWidthVar() {
+    const w = parseInt(getComputedStyle(sideMenu).width, 10) || 250;
     document.documentElement.style.setProperty('--menu-width', w + 'px');
-  };
+  }
+  setMenuWidthVar();
+  window.addEventListener('resize', setMenuWidthVar);
 
-  // 메뉴 상태 반영(body.menu-open 토글)
-  const updateMenuState = () => {
-    const isOpen = sideMenu.classList.contains('active');
-    body.classList.toggle('menu-open', isOpen);
-    setMenuWidthVar();
-  };
-
-  // 햄버거 버튼
+  // 햄버거 토글
   menuBtn.addEventListener('click', () => {
     sideMenu.classList.toggle('active');
-    menuBtn.setAttribute('aria-expanded', String(sideMenu.classList.contains('active')));
-    updateMenuState();
-  });
-
-  // 창 리사이즈 시 변수 재계산(열려 있을 때만)
-  window.addEventListener('resize', () => {
-    if (sideMenu.classList.contains('active')) setMenuWidthVar();
+    const open = sideMenu.classList.contains('active');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    body.classList.toggle('menu-open', open);
   });
 
   // 서브메뉴 토글
-  menuContent.addEventListener('click', (e) => {
-    const btn = e.target.closest('.submenu-toggle');
-    if (btn) {
-      e.preventDefault();
+  document.querySelectorAll('.submenu-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
       const sub = btn.nextElementSibling;
-      if (sub && sub.classList.contains('submenu')) {
-        sub.classList.toggle('show');
-        const expanded = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!expanded));
-      }
-      return;
-    }
+      if (!sub || !sub.classList.contains('submenu')) return;
+      sub.classList.toggle('show');
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+    });
   });
 
-  // 초기 상태
-  setMenuWidthVar();
+  // 섹션 전환 (필요 시)
+  function showSection(id) {
+    const sections = document.querySelectorAll('.content');
+    sections.forEach(s => s.classList.remove('active'));
+    const el = id && document.getElementById(id);
+    if (el) el.classList.add('active');
+
+    // 메뉴 닫기
+    sideMenu.classList.remove('active');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    body.classList.remove('menu-open');
+  }
+
+  // 메뉴 내 링크 클릭
+  menuContent.addEventListener('click', (e) => {
+    const link = e.target.closest('[data-section]');
+    if (!link) return;
+    e.preventDefault();
+    showSection(link.getAttribute('data-section'));
+  });
+
+  // 해시 진입 처리
+  const hash = decodeURIComponent(location.hash.replace('#',''));
+  if (hash) showSection(hash);
 });
