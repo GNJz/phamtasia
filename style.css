@@ -150,7 +150,7 @@ body.menu-open .logo-center{
   }
 }
 /* ===== 모바일에서만: 메뉴 열릴 때 로고 축소 + 가운데 정렬 ===== */
-@media (max-width: 640px) {
+@media (max-width: 500px) {
   /* 부드러운 전환 */
   .logo-center { transition: transform .35s ease; }
   .logo-center img { transition: transform .35s ease; }
