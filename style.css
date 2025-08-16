@@ -138,7 +138,7 @@ button.submenu-toggle[aria-expanded="true"]{
 
   /* 모바일 기본 로고 크기(항상 더 작게) */
   .logo-center img{
-    width: 80vw !important;           /* 60~75vw로 조절 가능 */
+    width: 90vw !important;           /* 60~75vw로 조절 가능 */
     max-width: none !important;
     height: auto !important;
   }
