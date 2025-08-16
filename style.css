@@ -20,7 +20,7 @@ body {
   background: transparent;
   font-size: 24px;
   cursor: pointer;
-  color: #222; /* 폰트 색상을 기본 설정으로 통일 */
+  color: #222;
 }
 
 /* ===== 사이드 메뉴 (오버레이) ===== */
@@ -87,7 +87,7 @@ button.submenu-toggle[aria-expanded="true"]{
   padding: 0 0 0 6px;
   list-style: none;
 }
-.submenu.show{ max-height: 500px; }
+.submenu.show{ max-height: 500px; }     /* 기본(데스크톱 포함) */
 .submenu a{ font-size: 15px; }
 
 /* ===== 섹션 표시/정렬 ===== */
@@ -119,72 +119,39 @@ button.submenu-toggle[aria-expanded="true"]{
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
-  transition: transform .5s ease-out; /* 이동 효과를 더 부드럽게 변경 */
+  transform: translate(-50%,-50%);      /* 데스크톱은 항상 중앙 고정 */
+  transition: transform .35s ease;      /* 부드러운 이동 */
   z-index: 1000;
   pointer-events: none;
   will-change: transform; 
 }
 
-/* 로고 크기 */
+/* 로고 크기(데스크톱 기본) */
 .logo-center img{
-  width: 600px !important;  /* 숫자만 바꾸면 즉시 커짐 */
+  width: 600px !important;
   max-width: none !important;
   height: auto !important;
+  transition: transform .35s ease;      /* 축소 애니메이션 */
 }
 
-/* 메뉴가 열렸을 때 로고를 오른쪽으로 이동시키는 transform */
-body.menu-open .logo-center{
-  transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
-}
-
-/* ===== 반응형 ===== */
+/* ===== 반응형(모바일 전용 변경만 적용) ===== */
 @media (max-width: 640px){
-  body.menu-open .logo-center{
-    transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
-  }
-  .logo-center img{
-    width: 88vw;   /* 모바일은 화면비로 유연하게 */
-    max-width: none;
-    height: auto;
-  }
-}
-/* ===== 모바일에서만: 메뉴 열릴 때 로고 축소 + 가운데 정렬 ===== */
-@media (max-width: 640px) {
-  /* 부드러운 전환 */
-  .logo-center { transition: transform .35s ease; }
-  .logo-center img { transition: transform .35s ease; }
 
-  /* 메뉴가 열리면: 로고를 남은 콘텐츠 영역의 중앙으로 이동 */
-  /* (사이드메뉴 폭 = --menu-width) */
-  body.menu-open .logo-center {
-    transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
-  }
-  /* 동시에 로고 살짝 축소 */
-  body.menu-open .logo-center img {
-    transform: scale(0.75);  /* 0.7~0.85 사이 취향대로 조절 */
-  }
-
-  /* 서브메뉴가 12번까지 보이도록(잘리지 않게) 여유 높이 */
-  .submenu.show { max-height: 1200px; } /* 필요하면 더 키워도 됨 */
-}
-/* === 모바일 전용: 로고만 작게 + 메뉴 열릴 때 이동/축소 === */
-@media (max-width: 640px){
-  /* 기본 로고 크기(모바일) */
+  /* 모바일 기본 로고 크기(항상 더 작게) */
   .logo-center img{
-    width: 70vw !important;   /* 필요시 60~75vw로 조절 */
+    width: 70vw !important;           /* 필요 시 60~75vw로 조절 */
     max-width: none !important;
     height: auto !important;
   }
 
-  /* 메뉴 열리면: 로고 위치 이동 + 살짝 축소 */
+  /* 메뉴 열리면: 로고를 남은 콘텐츠 영역의 중앙으로 이동 + 살짝 축소 */
   body.menu-open .logo-center{
     transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
   }
   body.menu-open .logo-center img{
-    transform: scale(0.85);    /* 0.75~0.9 사이 취향대로 */
+    transform: scale(0.85);           /* 0.75~0.9 사이 취향대로 */
   }
 
-  /* 서브메뉴가 모바일에서 12번까지 안 잘리도록 */
+  /* 서브메뉴가 모바일에서 12번까지 안 잘리도록 여유 */
   .submenu.show{ max-height: 1200px; }
 }
