@@ -1,254 +1,80 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="UTF-8"><!-- L10 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PHAM</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /*
-      원래 디자인을 위한 기본 스타일 (style.css에 포함될 내용)
-      - 배경색, 폰트 색상 등 원래의 틀을 유지합니다.
-      - JS에서 사용될 클래스들의 기본 스타일을 정의합니다.
-    */
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #fff; /* 원래의 흰색 배경 */
-        color: #000;
-        overflow-x: hidden;
-        transition: transform 0.3s ease;
-    }
-    .menu-btn {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1000;
-        background: none;
-        border: none;
-        color: #000; /* 검은색 버튼 */
-        font-size: 2em;
-        cursor: pointer;
-        transition: left 0.3s ease;
-    }
-    .side-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 250px;
-        height: 100vh;
-        background-color: rgba(255, 255, 255, 0.9);
-        padding: 60px 20px 20px;
-        box-sizing: border-box;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 999;
-        border-right: 1px solid #ccc;
-    }
-    .side-menu.active {
-        transform: translateX(0);
-    }
-    .logo-center {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 50;
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .logo-center img {
-        width: 100%;
-        max-width: 500px;
-        height: auto;
-    }
-    #pageWrap {
-        position: relative;
-        min-height: 100vh;
-        transition: transform 0.3s ease;
-    }
-    .content {
-        display: none;
-        padding: 40px;
-        box-sizing: border-box;
-        min-height: 100vh;
-    }
-    .content.active {
-        display: block;
-    }
-    .submenu {
-      list-style: none;
-      padding-left: 15px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
-    }
-    .submenu.show {
-      max-height: 500px;
-    }
-    .submenu-toggle, .menu-content a {
-      color: #000;
-      text-decoration: none;
-      display: block;
-      padding: 13px 0;
-      background: none;
-      border: none;
-      text-align: left;
-      width: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css"><!-- L12: CSS 연결 -->
 </head>
 <body>
-  <button class="menu-btn" id="menuBtn" aria-controls="sideMenu" aria-expanded="false" aria-label="메뉴 열기">☰</button>
+  <!-- L15: 메뉴 버튼 -->
+  <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기">☰</button>
 
+  <!-- L18: 사이드 메뉴 -->
   <nav class="side-menu" id="sideMenu" aria-label="사이드 내비게이션">
     <div class="menu-content" id="menuContent">
-      <a href="#home" data-section="home">Home</a>
+      <a href="#home">Home</a>
+
       <button class="submenu-toggle" aria-expanded="false">memo</button>
       <ul class="submenu">
-        <li><a href="#memo_1" data-section="memo_1">1. 이과 모드</a></li>
-        <li><a href="#memo_2" data-section="memo_2">2. 문과 모드</a></li>
-        <li><a href="#memo_3" data-section="memo_3">3. 예체능 모드</a></li>
+        <li><a href="#memo_1">1. 이과 모드</a></li>
+        <li><a href="#memo_2">2. 문과 모드</a></li>
+        <li><a href="#memo_3">3. 예체능 모드</a></li>
       </ul>
-      <button class="submenu-toggle" aria-expnded="KAO">KAO : K-pop Art Online</button>
+
+      <button class="submenu-toggle" aria-expanded="false">KAO : K-pop Art Online</button>
       <ul class="submenu has-gap">
-        <li><a herf="#KAO_2" data-section="iDea">iDea (세계관)</a></li>
-        <li><a herf="#KAO_3" data-section="SaaS">SaaS (구조)</a></li>
+        <li><a href="#KAO_idea">iDea (세계관)</a></li>
+        <li><a href="#KAO_saas">SaaS (구조)</a></li>
       </ul>
-      
-     <!-- 119번째 줄 수정 -->
-<a href="#prologue" data-section="prologue" class="spacer-top">프롤로그 prologue</a>
-      <a href="#part1" data-section="part1">파트 1 : 의식의 변화</a>
-      <a href="#mixtape" data-section="mixtape">mixtape : Runway</a>
+
+      <a href="#prologue" class="spacer-top">프롤로그 prologue</a>
+      <a href="#part1">파트 1 : 의식의 변화</a>
+      <a href="#mixtape">mixtape : Runway</a>
+
       <button class="submenu-toggle" aria-expanded="false">파트 2 : ep - Extended play</button>
       <ul class="submenu">
-        <li><a href="#p2_1" data-section="p2_1">1. memo - memory</a></li>
-        <li><a href="#p2_2" data-section="p2_2">2. memory - melody</a></li>
-        <li><a href="#p2_3" data-section="p2_3">3. rhythm & flow</a></li>
-        <li><a href="#p2_4" data-section="p2_4">4. mixtape^2 : Threads</a></li>
-        <li><a href="#p2_5" data-section="p2_5">5. Lost</a></li>
-        <li><a href="#p2_6" data-section="p2_6">6. Vega</a></li>
+        <li><a href="#p2_1">1. memo - memory</a></li>
+        <li><a href="#p2_2">2. memory - melody</a></li>
+        <li><a href="#p2_3">3. rhythm & flow</a></li>
+        <li><a href="#p2_4">4. mixtape^2 : Threads</a></li>
+        <li><a href="#p2_5">5. Lost</a></li>
+        <li><a href="#p2_6">6. Vega</a></li>
       </ul>
-      <a href="#maze" data-section="maze">DLC : 지옥의 대미궁</a>
-      <a href="#rocket" data-section="rocket">single : Rocke+ Spirit</a>
+
+      <a href="#maze">DLC : 지옥의 대미궁</a>
+      <a href="#rocket">single : Rocket Spirit</a>
+
+      <!-- L49: 파트3 (12개 꽉 채움) -->
       <button class="submenu-toggle" aria-expanded="false">파트 3 : warpSpace</button>
       <ul class="submenu">
-          
-        <li><a href="#p3_1" data-section="p3_1">1. Qquarts</a></li>
-        <li><a href="#memo_3" data-section="#memo_3">2. quarkka</a></li>
-        <li><a href="#memo_3" data-section="memo_3">3. </a></li>
-        <li><a href="#memo_4" data-section="memo_4">4. </a></li>
-        <li><a href="#memo_5" data-section="memo_5">5. </a></li>
-        <li><a href="#memo_6" data-section="memo_6">6. </a></li>
-        <li><a href="#memo_7" data-section="memo_7">7. </a></li>
-        <li><a href="#memo_8" data-section="memo_8">8. </a></li>
-        <li><a href="#memo_9" data-section="memo_9">9. </a></li>
-        <li><a href="#memo_10" data-section="memo_10">10. </a></li>
-        <li><a href="#memo_11" data-section="memo_11">11. </a></li>
-        <li><a href="#memo_12" data-section="memo_12">12. </a></li>
-     </ul>
-        
+        <li><a href="#p3_1">1. Qquarts</a></li>
+        <li><a href="#p3_2">2. quarkka</a></li>
+        <li><a href="#p3_3">3.</a></li>
+        <li><a href="#p3_4">4.</a></li>
+        <li><a href="#p3_5">5.</a></li>
+        <li><a href="#p3_6">6.</a></li>
+        <li><a href="#p3_7">7.</a></li>
+        <li><a href="#p3_8">8.</a></li>
+        <li><a href="#p3_9">9.</a></li>
+        <li><a href="#p3_10">10.</a></li>
+        <li><a href="#p3_11">11.</a></li>
+        <li><a href="#p3_12">12.</a></li>
       </ul>
     </div>
   </nav>
 
+  <!-- L66: 중앙 로고 (이미지 파일명 맞춰둠) -->
   <div class="logo-center">
-    <img src="pham_logo3.JPG" alt="PHAM" />
+    <img src="pham_logo3.jpg" alt="PHAM">
   </div>
 
+  <!-- L71: (필요 시) 본문 섹션들 -->
   <main id="pageWrap">
-    <div class="content" id="mainContent">
-      </div>
-    <section class="content" id="home"></section>
-    <section class="content" id="memo_1">이과 메모 초기 텍스트</section>
-    <section class="content" id="memo_2">문과 메모 초기 텍스트</section>
-    <section class="content" id="memo_3">예체능 메모 초기 텍스트</section>
-    <section class="content" id="prologue">프롤로그</section>
-    <section class="content" id="part1">파트 1 내용</section>
-    <section class="content" id="mixtape">믹스테이프</section>
-    <section class="content" id="maze">지옥의 대미궁</section>
-    <section class="content" id="rocket">로켓 스피릿</section>
-    <section class="KAO" id="KAO">KAO : K-pop Art Online </section>
-    <section class="p3_1" id="p3_1">Qquarts co.</section>
-    <section class="#memo_3" id="#memo_3">quarkka</section>
-    <section class="content" id="p2_4"></section>
-    <section class="content" id="p2_5"></section>
-    <section class="content" id="p2_6"></section>
-    <section class="content" id="p3_1"></section>
+    <section id="home" class="content active"></section>
   </main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const body        = document.body;
-      const sideMenu    = document.getElementById('sideMenu');
-      const menuBtn     = document.getElementById('menuBtn');
-      const menuContent = document.getElementById('menuContent');
-      const logoCenter  = document.querySelector('.logo-center');
-
-      // 모든 콘텐츠 섹션에 .content 클래스 추가 (기존 코드에서 누락)
-      document.querySelectorAll('section').forEach(section => {
-          section.classList.add('content');
-      });
-
-      function updateMenuState() {
-        const w = sideMenu.getBoundingClientRect().width || 250;
-        document.documentElement.style.setProperty('--menu-width', w + 'px');
-        body.classList.toggle('menu-open', sideMenu.classList.contains('active'));
-      }
-
-      menuBtn.addEventListener('click', () => {
-        sideMenu.classList.toggle('active');
-        menuBtn.setAttribute('aria-expanded', String(sideMenu.classList.contains('active')));
-        updateMenuState();
-      });
-
-      document.querySelectorAll('.submenu-toggle').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const sub = btn.nextElementSibling;
-          if (sub && sub.classList.contains('submenu')) {
-            sub.classList.toggle('show');
-            const expanded = btn.getAttribute('aria-expanded') === 'true';
-            btn.setAttribute('aria-expanded', String(!expanded));
-          }
-        });
-      });
-
-      function showSection(id) {
-        // 모든 섹션을 비활성화
-        const sections = document.querySelectorAll('.content');
-        sections.forEach(s => s.classList.remove('active'));
-
-        // 선택된 섹션만 활성화 (메인 로고 포함)
-        const el = document.getElementById(id);
-        if (el) el.classList.add('active');
-
-        // 홈 섹션일 때만 로고를 표시
-        if (id === 'home' || !id) {
-          logoCenter.style.display = 'block';
-        } else {
-          logoCenter.style.display = 'none';
-        }
-
-        sideMenu.classList.remove('active');
-        menuBtn.setAttribute('aria-expanded', 'false');
-        updateMenuState();
-      }
-
-      menuContent.addEventListener('click', e => {
-        const link = e.target.closest('[data-section]');
-        if (!link) return;
-        e.preventDefault();
-        showSection(link.getAttribute('data-section'));
-      });
-
-      updateMenuState();
-      const hash = decodeURIComponent(location.hash.replace('#', ''));
-      if (hash && document.getElementById(hash)) {
-        showSection(hash);
-      } else {
-        showSection('home');
-      }
-    });
-  </script>
+  <!-- L78: JS 연결 (항상 </body> 바로 위) -->
+  <script src="script.js"></script><!-- L78 -->
 </body>
 </html>
