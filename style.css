@@ -127,7 +127,7 @@ button.submenu-toggle[aria-expanded="true"]{
 
 /* 로고 크기(데스크톱 기본) */
 .logo-center img{
-  width: 600px !important;
+  width: 700px !important;
   max-width: none !important;
   height: auto !important;
   transition: transform .35s ease;      /* 축소 애니메이션 */
