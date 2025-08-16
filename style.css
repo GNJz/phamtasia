@@ -19,15 +19,14 @@ body {
   font-size: 24px; cursor: pointer; color: #222;
 }
 
-/* 사이드 메뉴 (기본) */
+/* 사이드 메뉴 */
 .side-menu{
-  position: fixed; inset: 0 auto 0 0;   /* top:0; right:auto; bottom:0; left:0 */
+  position: fixed; top: 0; left: 0;
   width: 300px; height: 100vh;
   background: #fff; box-shadow: 2px 0 8px rgba(0,0,0,.12);
-  transform: translateX(-100%); transition: transform .25s ease;
+  transform: translateX(-100%);
+  transition: transform .25s ease;
   z-index: 2000; overflow-y: auto;
-  overscroll-behavior: contain;   /* 스크롤 체인 방지(모바일에서 튕김 방지) */
-  touch-action: pan-y;            /* 세로 스크롤 명시 */
 }
 .side-menu.active{ transform: translateX(0); }
 
@@ -55,7 +54,6 @@ button.submenu-toggle[aria-expanded="true"]{ font-weight: 600 !important; }
   max-height: 0; overflow: hidden; transition: max-height .25s ease;
   margin: 0; padding: 0 0 0 6px; list-style: none;
 }
-/* 데스크톱 기본(너무 길어지지 않게) */
 .submenu.show{ max-height: 500px; }
 .submenu a{ font-size: 15px; }
 
@@ -69,55 +67,40 @@ button.submenu-toggle[aria-expanded="true"]{ font-weight: 600 !important; }
 /* 내부 컨테이너 */
 .page{ max-width: 900px; width: 100%; padding: 0 24px; }
 
-/* 대문 로고(항상 중앙) */
+/* ===== 대문 로고 ===== */
 :root{ --menu-width: 300px; }
+
 .logo-center{
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
   transition: transform .35s ease;
   z-index: 1000; pointer-events: none; will-change: transform;
 }
-/* 데스크톱 로고 크기 (고정) */
+
+/* 로고 크기 (데스크탑) */
 .logo-center img{
   width: 700px !important; max-width: none !important; height: auto !important;
   transition: transform .35s ease;
 }
 
+/* 메뉴 열렸을 때: 로고를 남은 영역의 중앙으로 이동 */
+body.menu-open .logo-center{
+  transform: translate(calc(-50% + var(--menu-width) / 2), -50%) !important;
+}
+
 /* ========== 모바일 전용 (≤800px) ========== */
 @media (max-width: 800px){
-  /* 모바일 기본 로고 크기 (조금 크게) */
   .logo-center img{
     width: 92vw !important; max-width: none !important; height: auto !important;
   }
 
-  /* 메뉴 열리면: 로고 오른쪽으로 이동 + 살짝 축소 (모바일에서만 적용) */
-  body.menu-open .logo-center{
-    transform: translate(calc(-50% + var(--menu-width)/2), -50%);
-  }
-  body.menu-open .logo-center img{
-    transform: scale(0.85);
-  }
+  body.menu-open .logo-center img{ transform: scale(0.85); }
 
-  /* iOS 하단바 포함한 동적 뷰포트 + 안전영역 고려 + 충분한 여유로 12번까지 보이게 */
   .side-menu{
-    height: 100dvh;                 /* 동적 뷰포트 높이 */
-    min-height: 100svh;             /* 안정 뷰포트(Fallback) */
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(200px + env(safe-area-inset-bottom));
+    height: 100dvh; -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
   }
-  .submenu.show{ max-height: 99999px !important; }  /* 펼치면 제한 없이 */
+  .submenu.show{ max-height: 9999px !important; }
 
-  /* 메뉴 열리면 배경 스크롤 잠금(메뉴만 스크롤) */
   body.menu-open{ overflow: hidden; height: 100dvh; }
-}
-
-/* ========== 데스크탑 전용 (≥1024px 강제) ========== */
-/* 메뉴가 열려도 로고는 항상 '화면' 정중앙 유지 */
-@media (min-width: 1024px){
-  body.menu-open .logo-center{
-    transform: translate(-50%, -50%) !important;
-  }
-  body.menu-open .logo-center img{
-    transform: none !important;
-  }
 }
