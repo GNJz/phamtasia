@@ -107,3 +107,9 @@ button.submenu-toggle[aria-expanded="true"]{ font-weight: 600 !important; }
   /* 메뉴 열리면 배경 스크롤 잠금(메뉴만 스크롤) */
   body.menu-open{ overflow: hidden; height: 100dvh; }
 }
+/* 데스크탑(>800px)에서는 메뉴 열려도 로고를 항상 정중앙 유지 */
+@media (min-width: 801px){
+  body.menu-open .logo-center{
+    transform: translate(-50%, -50%) !important; /* 오른쪽으로 밀지 않음 */
+  }
+}
