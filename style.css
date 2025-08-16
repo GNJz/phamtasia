@@ -24,7 +24,7 @@ body {
 }
 
 /* 사이드 메뉴 */
-:root{ --menu-width: 300px; }           /* 메뉴 폭 변수 (데스크탑/모바일 공용) */
+:root{ --menu-width: 300px; }           /* 메뉴 폭 변수 */
 .side-menu{
   position: fixed;
   top: 0; left: 0;
@@ -132,14 +132,14 @@ button.submenu-toggle[aria-expanded="true"]{
 }
 
 /* ===== 데스크탑(>800px) ===== */
-/* 메뉴 열려도 로고는 항상 화면의 정확한 중앙 유지 */
 @media (min-width: 801px){
+  /* 메뉴 열려도 로고는 항상 정확한 중앙 */
   body.menu-open .logo-center{
     transform: translate(-50%, -50%) !important;
   }
 }
 
-/* ===== 모바일(≤800px) 전용 ===== */
+/* ===== 모바일(≤800px) ===== */
 @media (max-width: 800px){
 
   /* 모바일 기본 로고 크기 */
@@ -149,7 +149,7 @@ button.submenu-toggle[aria-expanded="true"]{
     height: auto !important;
   }
 
-  /* 메뉴 열리면: 로고를 남은 콘텐츠 영역의 중앙으로 이동 + 살짝 축소 */
+  /* 메뉴 열리면: 로고를 남은 콘텐츠 영역 중앙으로 이동 + 살짝 축소 */
   body.menu-open .logo-center{
     transform: translate(calc(-50% + var(--menu-width)/2), -50%);
   }
@@ -157,9 +157,9 @@ button.submenu-toggle[aria-expanded="true"]{
     transform: scale(0.85);
   }
 
-  /* 모바일 스크롤/잘림 이슈 해결 (파트3 12번까지 보이게) */
+  /* 모바일 스크롤/잘림 이슈 방지 (파트3 12번까지 보이게) */
   .side-menu{
-    height: 100dvh;                            /* iOS 동적 뷰포트 */
+    height: 100dvh;
     -webkit-overflow-scrolling: touch;
     padding-bottom: calc(140px + env(safe-area-inset-bottom));
   }
