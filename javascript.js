@@ -1,11 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const sideMenu = document.getElementById('sideMenu');
-  const menuBtn = document.getElementById('menuBtn');
+  const sideMenu    = document.getElementById('sideMenu');
+  const menuBtn     = document.getElementById('menuBtn');
+  const menuContent = document.getElementById('menuContent');
+  const logoCenter  = document.querySelector('.logo-center');
 
-  // 햄버거 버튼 클릭 → 메뉴 열기/닫기
+  function updateMenuState(){
+    const isOpen = sideMenu.classList.contains('active');
+    document.body.classList.toggle('menu-open', isOpen);
+  }
+
+  // 햄버거 버튼 토글
   menuBtn.addEventListener('click', () => {
     sideMenu.classList.toggle('active');
-    menuBtn.setAttribute('aria-expanded', sideMenu.classList.contains('active'));
+    menuBtn.setAttribute('aria-expanded', String(sideMenu.classList.contains('active')));
+    updateMenuState();
   });
 
   // 서브메뉴 토글
@@ -19,4 +27,38 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // 섹션 전환
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+
+    if (id === 'home' || !id) {
+      logoCenter.style.display = 'block';
+    } else {
+      logoCenter.style.display = 'none';
+    }
+
+    sideMenu.classList.remove('active');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    updateMenuState();
+  }
+
+  // 메뉴 클릭 이벤트
+  menuContent.addEventListener('click', e => {
+    const link = e.target.closest('[data-section]');
+    if (!link) return;
+    e.preventDefault();
+    showSection(link.getAttribute('data-section'));
+  });
+
+  // 초기 로딩
+  updateMenuState();
+  const hash = decodeURIComponent(location.hash.replace('#', ''));
+  if (hash && document.getElementById(hash)) {
+    showSection(hash);
+  } else {
+    showSection('home');
+  }
 });
