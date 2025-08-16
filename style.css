@@ -128,14 +128,14 @@ button.submenu-toggle[aria-expanded="true"]{
 
 /* 로고 크기(데스크톱 기본) */
 .logo-center img{
-  width: 600px !important;
+  width: 7000px !important;
   max-width: none !important;
   height: auto !important;
   transition: transform .35s ease;      /* 축소 애니메이션 */
 }
 
 /* ===== 반응형(모바일 전용 변경만 적용) ===== */
-@media (max-width: 640px){
+@media (max-width: 7000px){
 
   /* 모바일 기본 로고 크기(항상 더 작게) */
   .logo-center img{
