@@ -134,7 +134,7 @@ button.submenu-toggle[aria-expanded="true"]{
 }
 
 /* ===== 모바일 전용 변경만 적용 ===== */
-@media (max-width: 640px){
+@media (max-width: 700px){
 
   /* 모바일 기본 로고 크기(항상 더 작게) */
   .logo-center img{
