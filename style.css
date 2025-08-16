@@ -1,52 +1,50 @@
-/* ===== PHAM: 최종 스타일 (CSS 전부) ===== */
+/* ===== PHAM 스타일 ===== */
 
 /* 기본 세팅 */
 * { box-sizing: border-box; }
-html, body { height: 100%; }
+html, body { height: 100%; margin: 0; }
 body {
-  margin: 0;
-  font-family: "Noto Sans KR", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   background: #fff;
   color: #222;
   transition: transform .3s ease;
+  overflow-x: hidden;
 }
 
 /* 햄버거 버튼 */
-.menu-btn{
+.menu-btn {
   position: fixed;
   top: 16px; left: 16px;
   z-index: 3000;
-  border: 0;
-  background: transparent;
-  font-size: 24px;
-  cursor: pointer;
+  border: 0; background: transparent;
+  font-size: 24px; cursor: pointer;
   color: #222;
 }
 
 /* 사이드 메뉴 */
-:root{ --menu-width: 300px; }           /* 메뉴 폭 변수 */
-.side-menu{
+:root { --menu-width: 300px; }
+.side-menu {
   position: fixed;
   top: 0; left: 0;
   width: var(--menu-width);
   height: 100vh;
-  background: #ffffff;
+  background: #fff;
   box-shadow: 2px 0 8px rgba(0,0,0,.12);
   transform: translateX(-100%);
   transition: transform .25s ease;
   z-index: 2000;
   overflow-y: auto;
 }
-/* 열림 상태 */
-.side-menu.active{ transform: translateX(0); }
+.side-menu.active { transform: translateX(0); }
 
 /* 메뉴 콘텐츠 */
-.menu-content{
+.menu-content {
   display: grid;
   gap: 8px;
   padding: 64px 12px 20px;
 }
-.menu-content a{
+.menu-content a,
+.submenu-toggle {
   display: block;
   padding: 12px 20px;
   border-radius: 10px;
@@ -54,120 +52,42 @@ body {
   color: #222;
   background: #fff;
   box-shadow: inset 0 -1px 0 rgba(0,0,0,.06);
-  white-space: nowrap;
 }
-.menu-content a:hover{ background: #f7f7f7; }
-.menu-content a.spacer-top{ margin-top: 16px; }
+.menu-content a:hover,
+.submenu-toggle:hover { background: #f7f7f7; }
 .menu-content .submenu.has-gap { margin-bottom: 16px; }
 
 /* 서브메뉴 */
-.submenu-toggle{
-  width: 100%;
-  text-align: left;
-  padding: 12px 12px;
-  border: 0;
-  background: #fff;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.06);
-  border-radius: 10px;
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
-  color: #222;
-  white-space: nowrap;
-}
-button.submenu-toggle[aria-expanded="true"]{
-  font-weight: 600 !important;
-}
-
-.submenu{
+.submenu {
   max-height: 0;
   overflow: hidden;
   transition: max-height .25s ease;
-  margin: 0;
-  padding: 0 0 0 6px;
+  margin: 0; padding: 0 0 0 12px;
   list-style: none;
 }
-.submenu.show{ max-height: 500px; }     /* 데스크탑 기본 */
+.submenu.show { max-height: 9999px; }
 
 /* 콘텐츠 섹션 */
-.content {
-  display: none;
-  min-height: 100vh;
-  padding: 40px;
-  box-sizing: border-box;
-}
-.content.active{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 120px;
-  text-align: center;
-}
+.content { display: none; min-height: 100vh; padding: 40px; }
+.content.active { display: block; }
 
-/* 내부 컨테이너 */
-.page{
-  max-width: 900px;
-  width: 100%;
-  padding: 0 24px;
-}
-
-/* 대문 로고(항상 중앙) */
-.logo-center{
+/* 로고 중앙 */
+.logo-center {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);   /* 기본: 정확히 중앙 */
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
   transition: transform .35s ease;
   z-index: 1000;
-  pointer-events: none;
-  will-change: transform;
 }
-/* 데스크탑 로고 크기(고정) */
-.logo-center img{
-  width: 700px !important;
-  max-width: none !important;
-  height: auto !important;
-  transition: transform .35s ease;
+.logo-center img {
+  width: 700px; max-width: 90vw; height: auto;
 }
 
-/* ===== 데스크탑(>800px) ===== */
-@media (min-width: 801px){
-  /* 메뉴 열려도 로고는 항상 정확한 중앙 */
-  body.menu-open .logo-center{
-    transform: translate(-50%, -50%) !important;
-  }
-}
-
-/* ===== 모바일(≤800px) ===== */
-@media (max-width: 800px){
-
-  /* 모바일 기본 로고 크기 */
-  .logo-center img{
-    width: 92vw !important;
-    max-width: none !important;
-    height: auto !important;
-  }
-
-  /* 메뉴 열리면: 로고를 남은 콘텐츠 영역 중앙으로 이동 + 살짝 축소 */
-  body.menu-open .logo-center{
+/* 모바일 */
+@media (max-width: 800px) {
+  .logo-center img { width: 90vw; }
+  body.menu-open .logo-center {
     transform: translate(calc(-50% + var(--menu-width)/2), -50%);
   }
-  body.menu-open .logo-center img{
-    transform: scale(0.85);
-  }
-
-  /* 모바일 스크롤/잘림 이슈 방지 (파트3 12번까지 보이게) */
-  .side-menu{
-    height: 100dvh;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(140px + env(safe-area-inset-bottom));
-  }
-  .submenu.show{ max-height: 9999px !important; }
-
-  /* 메뉴 열리면 배경 스크롤 잠금(메뉴만 스크롤) */
-  body.menu-open{
-    overflow: hidden;
-    height: 100dvh;
-  }
+  body.menu-open .logo-center img { transform: scale(0.85); }
 }
