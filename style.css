@@ -149,3 +149,22 @@ body.menu-open .logo-center{
     height: auto;
   }
 }
+/* ===== 모바일에서만: 메뉴 열릴 때 로고 축소 + 가운데 정렬 ===== */
+@media (max-width: 640px) {
+  /* 부드러운 전환 */
+  .logo-center { transition: transform .35s ease; }
+  .logo-center img { transition: transform .35s ease; }
+
+  /* 메뉴가 열리면: 로고를 남은 콘텐츠 영역의 중앙으로 이동 */
+  /* (사이드메뉴 폭 = --menu-width) */
+  body.menu-open .logo-center {
+    transform: translate(calc(-50% + var(--menu-width) / 2), -50%);
+  }
+  /* 동시에 로고 살짝 축소 */
+  body.menu-open .logo-center img {
+    transform: scale(0.75);  /* 0.7~0.85 사이 취향대로 조절 */
+  }
+
+  /* 서브메뉴가 12번까지 보이도록(잘리지 않게) 여유 높이 */
+  .submenu.show { max-height: 1200px; } /* 필요하면 더 키워도 됨 */
+}
