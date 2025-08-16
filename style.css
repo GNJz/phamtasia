@@ -154,3 +154,27 @@ button.submenu-toggle[aria-expanded="true"]{
   /* 서브메뉴가 모바일에서 12번까지 안 잘리도록 여유 */
   .submenu.show{ max-height: 1200px; }
 }
+/* --- 모바일 메뉴 하단 잘림/스크롤 고정 해결 --- */
+@media (max-width: 640px){
+  /* 메뉴 자체가 스크롤 컨테이너 */
+  .side-menu{
+    /* iOS 하단 바까지 포함하는 동적 뷰포트 사용 */
+    height: 100dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    /* 하단 안전영역 + 여유 패딩 (12번까지 보이게) */
+    padding-bottom: max(120px, env(safe-area-inset-bottom) + 120px);
+  }
+
+  /* 서브메뉴 펼침 시 충분히 크게(기존 값 덮어쓰기) */
+  .submenu.show{
+    max-height: 9999px !important;
+  }
+
+  /* 메뉴 열렸을 때 바디는 스크롤 잠금 (메뉴만 스크롤) */
+  body.menu-open{
+    overflow: hidden;
+    height: 100dvh;
+  }
+}
