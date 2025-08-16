@@ -169,4 +169,4 @@ body.menu-open .logo-center{
   .submenu.show { max-height: 1200px; } /* 필요하면 더 키워도 됨 */
 }
 /* 수정 */
-.logo-center img{ width: 88vw !important; max-width: none !important; height: auto !important; }
+.logo-center img{ width: 75vw !important; max-width: none !important; height: auto !important; }
