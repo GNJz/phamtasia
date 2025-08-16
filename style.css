@@ -22,8 +22,7 @@ body {
 /* 사이드 메뉴 */
 .side-menu{
   position: fixed; top: 0; left: 0;
-  width: 300px;                 /* L24: 메뉴 폭 */
-  height: 100vh;
+  width: 300px; height: 100vh;
   background: #fff; box-shadow: 2px 0 8px rgba(0,0,0,.12);
   transform: translateX(-100%);
   transition: transform .25s ease;
@@ -55,7 +54,7 @@ button.submenu-toggle[aria-expanded="true"]{ font-weight: 600 !important; }
   max-height: 0; overflow: hidden; transition: max-height .25s ease;
   margin: 0; padding: 0 0 0 6px; list-style: none;
 }
-.submenu.show{ max-height: 500px; } /* 데스크탑 기본 */
+.submenu.show{ max-height: 500px; }
 .submenu a{ font-size: 15px; }
 
 /* 콘텐츠 섹션 */
@@ -69,51 +68,39 @@ button.submenu-toggle[aria-expanded="true"]{ font-weight: 600 !important; }
 .page{ max-width: 900px; width: 100%; padding: 0 24px; }
 
 /* ===== 대문 로고 ===== */
-:root{ --menu-width: 300px; } /* L66: JS가 이 값을 동기화함 */
+:root{ --menu-width: 300px; }
 
 .logo-center{
   position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);     /* 기본 정중앙 */
+  transform: translate(-50%,-50%);
   transition: transform .35s ease;
   z-index: 1000; pointer-events: none; will-change: transform;
 }
 
-/* 데스크탑 로고 크기 */
+/* 로고 크기 (데스크탑) */
 .logo-center img{
   width: 700px !important; max-width: none !important; height: auto !important;
   transition: transform .35s ease;
 }
 
-/* ★ 메뉴 열리면: 로고가 메뉴 폭만큼 오른쪽으로 이동 → 남은 영역의 중앙 정렬 */
+/* 메뉴 열렸을 때: 로고를 남은 영역의 중앙으로 이동 */
 body.menu-open .logo-center{
-  transform: translate(calc(-50% + var(--menu-width) / 2), -50%) !important; /* L82 */
+  transform: translate(calc(-50% + var(--menu-width) / 2), -50%) !important;
 }
 
 /* ========== 모바일 전용 (≤800px) ========== */
 @media (max-width: 800px){
   .logo-center img{
-    width: 92vw !important; height: auto !important; /* L86: 모바일 기본 크기 */
+    width: 92vw !important; max-width: none !important; height: auto !important;
   }
-  /* 모바일은 위치는 중앙 유지, 열렸을 때만 살짝 축소 */
-  body.menu-open .logo-center{ transform: translate(-50%, -50%) !important; }
+
   body.menu-open .logo-center img{ transform: scale(0.85); }
 
-  /* 스크롤 잘림 방지 (iOS 포함) */
   .side-menu{
-    height: 100dvh;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-    padding-bottom: calc(160px + env(safe-area-inset-bottom)); /* L101 */
+    height: 100dvh; -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
   }
-  .submenu.show{ max-height: 9999px !important; } /* L102: 파트3 12번까지 보장 */
+  .submenu.show{ max-height: 9999px !important; }
 
-  /* 메뉴 열리면 본문 스크롤 잠금 (메뉴만 스크롤) */
-  body.menu-open{ overflow: hidden; height: 100dvh; } /* L106 */
-}
-
-/* ========== 데스크탑 전용 (≥801px) ========== */
-@media (min-width: 801px){
-  /* 데스크탑은 로고 이동 규칙 유지(위 L82) */
-  /* 추가로, 로고 항상 위에 보이도록 안전 */
-  .logo-center{ z-index: 2500; } /* L114 */
+  body.menu-open{ overflow: hidden; height: 100dvh; }
 }
