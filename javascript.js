@@ -5,18 +5,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuContent = document.getElementById('menuContent');
   const logoCenter  = document.querySelector('.logo-center');
 
-  // 메뉴 상태 업데이트
-  function updateMenuState() {
-    const w = sideMenu.getBoundingClientRect().width || 250;
+  // 메뉴 폭을 CSS 변수로 반영 (메뉴 열릴 때/리사이즈 때)
+  function setMenuWidthVar() {
+    const w = sideMenu.offsetWidth || 300;
     document.documentElement.style.setProperty('--menu-width', w + 'px');
-    body.classList.toggle('menu-open', sideMenu.classList.contains('active'));
   }
 
-  // 햄버거 버튼
+  function updateMenuState() {
+    const open = sideMenu.classList.contains('active');
+    body.classList.toggle('menu-open', open);
+    setMenuWidthVar();
+  }
+
+  // 햄버거 토글
   menuBtn.addEventListener('click', () => {
     sideMenu.classList.toggle('active');
     menuBtn.setAttribute('aria-expanded', String(sideMenu.classList.contains('active')));
     updateMenuState();
+  });
+
+  // 리사이즈 시 반영
+  window.addEventListener('resize', () => {
+    if (sideMenu.classList.contains('active')) setMenuWidthVar();
   });
 
   // 서브메뉴 토글
@@ -31,38 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 섹션 전환
+  // 섹션 전환(필요 시)
   function showSection(id) {
-    const sections = document.querySelectorAll('.content');
-    sections.forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.content').forEach(sec => sec.classList.remove('active'));
     const el = document.getElementById(id);
     if (el) el.classList.add('active');
 
+    // home이면 로고 표시, 아니면 숨김(원래 동작 유지)
     if (id === 'home' || !id) {
       logoCenter.style.display = 'block';
     } else {
       logoCenter.style.display = 'none';
     }
 
+    // 메뉴 닫기
     sideMenu.classList.remove('active');
     menuBtn.setAttribute('aria-expanded', 'false');
     updateMenuState();
   }
 
-  // 메뉴 클릭 이벤트
-  menuContent.addEventListener('click', e => {
+  // 메뉴 클릭으로 섹션 이동
+  menuContent.addEventListener('click', (e) => {
     const link = e.target.closest('[data-section]');
     if (!link) return;
     e.preventDefault();
     showSection(link.getAttribute('data-section'));
   });
 
-  // 초기 로딩
-  updateMenuState();
-  const hash = decodeURIComponent(location.hash.replace('#', ''));
-  if (hash && document.getElementById(hash)) {
-    showSection(hash);
-  } else {
-    showSection('home');
-  }
+  // 초기 상태
+  setMenuWidthVar();
+  const hash = decodeURIComponent(location.hash.replace('#',''));
+  showSection(hash || 'home');
 });
